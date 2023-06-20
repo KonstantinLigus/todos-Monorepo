@@ -1,24 +1,11 @@
 /* eslint-disable no-console */
 
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
+import dataSource from './datasourse';
 
 const connectDB = async () => {
   try {
-    const appDataSource = new DataSource({
-      host: process.env.POSTGRES_HOST,
-      port: Number(process.env.POSTGRES_PORT),
-      logging: ['query', 'error'],
-      type: 'postgres',
-      entities: ['dist/**/*.entity.{ts,js}'],
-      migrations: ['dist/migrations/**/*.{ts,js}'],
-      subscribers: ['src/subscriber/**/*.ts'],
-      database: process.env.POSTGRES_DB,
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      synchronize: true
-    });
-    await appDataSource.initialize();
+    await dataSource.initialize();
     console.log('PostgreSQL Connected...');
   } catch (err: any) {
     console.error(err.message);

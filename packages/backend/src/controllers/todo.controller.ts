@@ -6,8 +6,19 @@ export class TodoController {
 
   async getAllTodo(_: Request, res: Response) {
     // TODO: Write your implementation here
-    const todos = await this.todoService.findAll();
-    res.send(todos);
+    const todosFromDB = await this.todoService.findAll();
+    res.status(200).send(todosFromDB);
+  }
+
+  async createTodo(req: Request, res: Response) {
+    const savedTodoFromDB = await this.todoService.createTodo(req.body);
+    res.status(201).send(savedTodoFromDB);
+  }
+
+  async deleteTodo(req: Request, res: Response) {
+    const id = Number(req.body.id);
+    const deletedTodoFromDB = await this.todoService.deleteTodo(id);
+    res.status(200).send(deletedTodoFromDB);
   }
 }
 

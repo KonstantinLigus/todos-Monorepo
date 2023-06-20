@@ -3,17 +3,17 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Todo {
   @PrimaryGeneratedColumn()
-  id: string;
+  id?: string;
 
-  @Column()
-  title: string;
+  @Column({ nullable: true })
+  title?: string;
 
-  @Column()
-  description: string;
+  @Column({ nullable: true })
+  description?: string;
 
-  @Column()
-  isComplete: boolean;
+  @Column({ nullable: true, default: false })
+  isComplete?: boolean;
 
-  @Column()
-  isPrivate: boolean;
+  @Column({ nullable: true, default: false })
+  isPrivate?: boolean;
 }
