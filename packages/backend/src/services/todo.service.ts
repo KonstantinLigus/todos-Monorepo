@@ -18,8 +18,13 @@ export default class TodoService {
     return savedTodoFromDB;
   }
 
-  async deleteTodo(id: number) {
+  async deleteTodo(id: string) {
     const deletedTodo = await dataSource.manager.delete(Todo, id);
     return deletedTodo;
+  }
+
+  async getOneTodo(id: string) {
+    const todoFromDB = await dataSource.manager.findOneBy(Todo, { id });
+    return todoFromDB;
   }
 }

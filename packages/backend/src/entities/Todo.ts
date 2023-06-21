@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Todo {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id?: string;
 
   @Column({ nullable: true })
@@ -11,9 +11,9 @@ export class Todo {
   @Column({ nullable: true })
   description?: string;
 
-  @Column({ nullable: true, default: false })
+  @Column({ default: false })
   isComplete?: boolean;
 
-  @Column({ nullable: true, default: false })
+  @Column({ default: false })
   isPrivate?: boolean;
 }

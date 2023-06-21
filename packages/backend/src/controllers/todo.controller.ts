@@ -16,9 +16,15 @@ export class TodoController {
   }
 
   async deleteTodo(req: Request, res: Response) {
-    const id = Number(req.body.id);
+    const { id } = req.body;
     const deletedTodoFromDB = await this.todoService.deleteTodo(id);
     res.status(200).send(deletedTodoFromDB);
+  }
+
+  async getTodoById(req: Request, res: Response) {
+    const { todoId } = req.params;
+    const todoFromDB = await this.todoService.getOneTodo(todoId);
+    res.status(200).send(todoFromDB);
   }
 }
 
