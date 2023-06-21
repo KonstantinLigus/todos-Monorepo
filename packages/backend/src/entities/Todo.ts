@@ -3,13 +3,13 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Todo {
   @PrimaryGeneratedColumn('uuid')
-  id?: string;
+  id: string;
 
   @Column({ nullable: true })
-  title?: string;
+  title: string;
 
   @Column({ nullable: true })
-  description?: string;
+  description: string;
 
   @Column({ default: false })
   isComplete?: boolean;

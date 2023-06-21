@@ -1,6 +1,6 @@
 import { Todo } from '../entities/Todo';
-import { ICreateTodo } from '../types/todos.type';
 import dataSource from '../config/datasourse';
+import { ICreateUpdateTodo } from '../types/todos.type';
 
 export default class TodoService {
   async findAll() {
@@ -8,7 +8,7 @@ export default class TodoService {
     return allTodosFromDB;
   }
 
-  async createTodo(todoReq: ICreateTodo) {
+  async createTodo(todoReq: ICreateUpdateTodo) {
     const todo = new Todo();
     todo.title = todoReq.title;
     todo.description = todoReq.description;
@@ -19,12 +19,24 @@ export default class TodoService {
   }
 
   async deleteTodo(id: string) {
-    const deletedTodo = await dataSource.manager.delete(Todo, id);
-    return deletedTodo;
+    const result = await dataSource.manager.delete(Todo, id);
+    return result;
   }
 
   async getOneTodo(id: string) {
     const todoFromDB = await dataSource.manager.findOneBy(Todo, { id });
     return todoFromDB;
+  }
+
+  async updateTodo(id: string, data: ICreateUpdateTodo) {
+    const dataForUpdate = {
+      title: data.title,
+      description: data.description,
+      isComplete: data.isComplete,
+      isPrivate: data.isPrivate
+    };
+    await dataSource.manager.update(Todo, { id }, dataForUpdate);
+    const updatedTodo = await this.getOneTodo(id);
+    return updatedTodo;
   }
 }
