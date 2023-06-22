@@ -1,4 +1,5 @@
 import { Response, Request, NextFunction } from 'express';
+import Joi from 'joi';
 import dataSource from '../config/datasourse';
 import { Todo } from '../entities/Todo';
 
@@ -22,7 +23,7 @@ export const isTodoExist = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export const validationBody = (schema: any) => {
+export const validationBody = (schema: Joi.Schema) => {
   const validate = async (req: Request, res: Response, next: NextFunction) => {
     try {
       await schema.validateAsync(req.body);
