@@ -1,5 +1,5 @@
 // TODO: Put a real interfaces here
 
-export interface ITodo {
-  data: string;
-}
+import { Todo } from '../entities/Todo';
+
+export type ICreateUpdateTodo = Omit<Todo, 'id'>;

@@ -7,7 +7,7 @@ import connectDB from './config/database';
 
 const app = express();
 const router = new AppRouter(app);
-// Connect to MongoDB
+// Connect to PostgerSQL
 connectDB();
 
 // Express configuration
