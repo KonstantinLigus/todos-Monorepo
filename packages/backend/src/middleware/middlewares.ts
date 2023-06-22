@@ -14,7 +14,11 @@ export const tryCatchWrapper = (callback: Function) => {
   return wrapper;
 };
 
-export const isTodoExist = async (req: Request, res: Response, next: NextFunction) => {
+export const isTodoExist = async <T>(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<T | void> => {
   try {
     await dataSource.manager.findOneBy(Todo, { id: req.params.todoId });
     next();
@@ -28,8 +32,10 @@ export const validationBody = (schema: Joi.Schema) => {
     try {
       await schema.validateAsync(req.body);
       next();
-    } catch (error: any) {
-      res.status(404).json({ message: error.message });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(404).json({ message: error.message });
+      }
     }
   };
   return validate;
