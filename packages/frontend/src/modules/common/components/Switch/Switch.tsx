@@ -1,18 +1,17 @@
 import React, { FC } from 'react';
-import FormControl from '@mui/material/FormControl';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { ISwitch } from '../../types/student.types';
 
-export const SwitchComponent: FC<ISwitch> = ({ name, isChecked, onChange }) => (
-  <FormControl component="fieldset" variant="standard">
-    <FormGroup>
+export const SwitchComponent: FC<ISwitch> = ({ nameForLabel, isChecked, isLabel, onChange }) => (
+  <>
+    {isLabel && (
       <FormControlLabel
-        control={<Switch checked={isChecked} onChange={onChange} name={name} />}
-        label={name}
+        control={<Switch checked={isChecked} onChange={onChange} name={nameForLabel} />}
+        label={nameForLabel}
         labelPlacement="start"
       />
-    </FormGroup>
-  </FormControl>
+    )}
+    {!isLabel && <Switch checked={isChecked} onChange={onChange} />}
+  </>
 );
