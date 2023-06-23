@@ -19,7 +19,11 @@ const myRow = [
   { title: 'title5', description: 'description5', isComplete: false, isPrivate: true, id: '5' }
 ];
 
-const borderLeftRightStyle = { borderRight: 'solid', borderLeft: 'solid', borderColor: '#e0e0e0' };
+const borderLeftRightStyle = {
+  borderRight: 'solid',
+  borderLeft: 'solid',
+  borderColor: theme.COLORS.secondary
+};
 
 const titleStyle = { width: '150px' };
 
@@ -27,9 +31,11 @@ const descriptionStyle = { ...borderLeftRightStyle, width: '500px' };
 
 const tableStyle = {
   ...borderLeftRightStyle,
-  color: '#e0e0e0',
+  color: theme.COLORS.secondary,
   borderTop: 'solid'
 };
+
+const actionsStyle = { width: '200px' };
 
 export const TodoList = () => {
   const navigate = useNavigate();
@@ -50,7 +56,9 @@ export const TodoList = () => {
             <TableCell align="center" style={descriptionStyle}>
               Description
             </TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell align="center" style={actionsStyle}>
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,7 +70,7 @@ export const TodoList = () => {
               <TableCell align="left" style={descriptionStyle}>
                 {row.description}
               </TableCell>
-              <TableCell align="right" style={{ width: '200px' }}>
+              <TableCell align="right">
                 <ButtonComponent
                   title="View"
                   onClick={onViewClickHandler}
