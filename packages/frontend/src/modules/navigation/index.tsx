@@ -9,8 +9,8 @@ export const MainRouter = () => (
   <BrowserRouter>
     <Routes>
       <Route element={<HomePageContainer />} path={APP_KEYS.ROUTER_KEYS.ROOT} />
-      <Route element={<TodoPage />} path={APP_KEYS.ROUTER_KEYS.TODO} />
       <Route element={<TodosPage />} path={APP_KEYS.ROUTER_KEYS.TODOS} />
+      <Route element={<TodoPage />} path={APP_KEYS.ROUTER_KEYS.TODO} />
     </Routes>
   </BrowserRouter>
 );

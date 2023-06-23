@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
+import { Button } from '@mui/material';
 import { IButtonComponent } from '../../types/student.types';
-import { ButtonStyled } from './Button.styled';
 
-export const ButtonComponent: FC<IButtonComponent> = ({ title, onClick, display }) => (
-  <ButtonStyled variant="contained" onClick={onClick} display={display}>
+export const ButtonComponent: FC<IButtonComponent> = ({ title, onClick, display, id, mr }) => (
+  <Button variant="contained" onClick={onClick} sx={{ display, mr }} data-id={id}>
     {title}
-  </ButtonStyled>
+  </Button>
 );
