@@ -16,8 +16,9 @@ export const QUERY_KEYS = {
 
 // Backend Routes
 export const BACKEND_KEYS = {
-  EXAMPLE: 'example',
-  COURSES: 'courses',
+  BASE_TODOS: 'http://localhost:4200',
+  TODOS: 'todos',
+  BASE_TODOS_URL: 'http://localhost:4200/api/todos',
   ARTICLES: 'articles',
   STATISTIC: 'statistic',
   TRENDING: 'trending',
@@ -28,6 +29,8 @@ export const ROUTER_KEYS = {
   ROOT: '/',
   HOME: 'home',
   AUTHORIZED: 'authorized',
-  TODO: '/todo/:id',
-  TODOS: '/todos'
+  TODOS: '/todos',
+  TODO_CREATE: '/todo/create',
+  TODO_ID: '/todo/:id',
+  TODO: '/todo'
 };
