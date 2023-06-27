@@ -30,8 +30,6 @@ export default class TodoService {
 
   async updateTodo(id: string, data: ICreateUpdateTodo) {
     const dataForUpdate = {
-      title: data.title,
-      description: data.description,
       isComplete: data.isComplete,
       isPrivate: data.isPrivate
     };

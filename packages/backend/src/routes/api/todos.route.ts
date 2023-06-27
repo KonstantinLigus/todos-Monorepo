@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
 import todoController from '../../controllers/todo.controller';
-import { isTodoExist, tryCatchWrapper, validationBody } from '../../middleware/middlewares';
-import { schemaPostContact, schemaPutContact } from '../../schemas/schema.joi';
+import { isTodoExist, tryCatchWrapper, validationBody } from '../../middleware';
+import { schemaPostTodo, schemaPutTodo } from '../../schemas/schema.joi';
 
 const todosRouter: Router = Router();
 
@@ -15,13 +15,13 @@ todosRouter.get(
 
 todosRouter.put(
   '/:todoId',
-  [isTodoExist, validationBody(schemaPutContact)],
+  [isTodoExist, validationBody(schemaPutTodo)],
   tryCatchWrapper(todoController.updateTodoById.bind(todoController))
 );
 
 todosRouter.post(
   '',
-  [validationBody(schemaPostContact)],
+  [validationBody(schemaPostTodo)],
   tryCatchWrapper(todoController.createTodo.bind(todoController))
 );
 

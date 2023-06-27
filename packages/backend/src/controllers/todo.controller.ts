@@ -39,14 +39,14 @@ export class TodoController {
     const { todoId } = req.params;
     const todoFromDB = await this.todoService.getOneTodo(todoId);
     errorChecker(todoFromDB);
-    res.status(200).json({ data: todoFromDB });
+    res.status(200).json({ todoFromDB });
   }
 
   async updateTodoById(req: Request, res: Response) {
     const { todoId } = req.params;
     const updatedTodo = await this.todoService.updateTodo(todoId, req.body);
     errorChecker(updatedTodo);
-    res.status(200).json({ data: updatedTodo });
+    res.status(200).json({ updatedTodo });
   }
 }
 

@@ -1,12 +1,25 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import { isUserExist, tryCatchWrapper, validationBody } from '../../middleware';
+import { schemaLogIn, schemaReg } from '../../schemas/schema.joi.auth';
+import userController from '../../controllers/users.constroller';
 
 const router: Router = Router();
 
-// @route   POST api/user
-// @desc    Register user given their email and password, returns the token upon successful registration
-// @access  Public
-router.post('/register', async (_: Request, res: Response) => {
-  res.send('Add registration logic there');
-});
+router.post(
+  '/register',
+  [validationBody(schemaReg), isUserExist],
+  tryCatchWrapper(userController.userRegistration.bind(userController))
+);
+
+router.post(
+  '/login',
+  [validationBody(schemaLogIn)],
+  tryCatchWrapper(userController.loginUser.bind(userController))
+);
+
+router.get(
+  '/verify/:verificationToken',
+  tryCatchWrapper(userController.verifyUser.bind(userController))
+);
 
 export default router;
