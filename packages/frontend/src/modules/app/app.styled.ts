@@ -9,8 +9,8 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  ul[class],
-  ol[class] {
+  ul,
+  ol {
     padding: 0;
   }
 
@@ -20,8 +20,8 @@ export const GlobalStyles = createGlobalStyle`
   h3,
   h4,
   p,
-  ul[class],
-  ol[class],
+  ul,
+  ol,
   li,
   figure,
   figcaption,
@@ -40,8 +40,8 @@ export const GlobalStyles = createGlobalStyle`
     background-color: ${COLORS.white};
   }
 
-  ul[class],
-  ol[class] {
+  ul,
+  ol {
     list-style: none;
   }
 
