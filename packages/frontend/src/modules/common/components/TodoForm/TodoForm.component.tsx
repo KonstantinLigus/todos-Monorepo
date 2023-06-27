@@ -14,11 +14,7 @@ import {
 import { ButtonComponent } from '../Button';
 import { usePostNewTodo } from '../../hooks';
 import { APP_KEYS } from '../../consts';
-
-const initialValues = {
-  title: '',
-  description: ''
-};
+import { initialValues } from '../../initialValues';
 
 type IValues = typeof initialValues;
 

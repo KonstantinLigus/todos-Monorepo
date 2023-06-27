@@ -18,14 +18,21 @@ export const TodoList = () => {
   const navigate = useNavigate();
   const deleteTodo = useDeleteTodo();
 
-  const viewBtnClickHandler = (event: React.MouseEvent) => {
-    const itemId = (event.target as HTMLButtonElement).dataset.id;
+  const viewBtnClickHandler = (event: React.SyntheticEvent<EventTarget>) => {
+    if (!(event.target instanceof HTMLButtonElement)) {
+      return;
+    }
+    const itemId = event.target.dataset.id;
     navigate(`${APP_KEYS.ROUTER_KEYS.TODO}/${itemId}`);
   };
 
-  const deleteBtnClickHandler = (event: React.MouseEvent) => {
-    const itemId = (event.target as HTMLButtonElement).dataset.id;
-    deleteTodo.mutate(itemId as string);
+  const deleteBtnClickHandler = (event: React.SyntheticEvent<EventTarget>) => {
+    if (!(event.target instanceof HTMLButtonElement)) {
+      return;
+    }
+    const itemId = event.target.dataset.id;
+    if (typeof itemId !== 'string') return <div>wrong todo&apos;s id</div>;
+    deleteTodo.mutate(itemId);
   };
 
   return (

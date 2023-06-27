@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { INewTodoItem, ITodoItem } from '../types/student.types';
 import { UserService } from '../../servise/user.service';
+import { APP_KEYS } from '../consts';
 
 const todosService = new UserService();
 
@@ -10,7 +11,7 @@ export const useGetTodos = () => {
     return res.data;
   };
 
-  return useQuery('todos', getAllTodos);
+  return useQuery(APP_KEYS.QUERY_KEYS.TODOS, getAllTodos);
 };
 
 export const useDeleteTodo = () => {
@@ -19,7 +20,7 @@ export const useDeleteTodo = () => {
   const deleteTodo = (id: string) => todosService.deleteTodo(id);
 
   const onSuccess = () => {
-    queryClient.invalidateQueries('todos');
+    queryClient.invalidateQueries(APP_KEYS.QUERY_KEYS.TODOS);
   };
 
   return useMutation(deleteTodo, { onSuccess });
@@ -31,7 +32,7 @@ export const useGetTodo = (id: string) => {
     return res.data;
   };
 
-  return useQuery('todo', getTodo);
+  return useQuery(APP_KEYS.QUERY_KEYS.TODO, getTodo);
 };
 
 export const useUpdateTodo = (id: string) => {
@@ -40,7 +41,7 @@ export const useUpdateTodo = (id: string) => {
   const updateTodo = (objForUpdate: ITodoItem) => todosService.putTodo(id, objForUpdate);
 
   const onSuccess = () => {
-    queryClient.invalidateQueries('todos');
+    queryClient.invalidateQueries(APP_KEYS.QUERY_KEYS.TODOS);
   };
 
   return useMutation(updateTodo, { onSuccess });
@@ -51,7 +52,7 @@ export const usePostNewTodo = () => {
 
   const postTodo = (newTodo: INewTodoItem) => todosService.postTodo(newTodo);
 
-  const onSuccess = () => queryClient.invalidateQueries('todos');
+  const onSuccess = () => queryClient.invalidateQueries(APP_KEYS.QUERY_KEYS.TODOS);
 
   return useMutation(postTodo, { onSuccess });
 };
