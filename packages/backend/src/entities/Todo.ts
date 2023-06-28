@@ -12,8 +12,11 @@ export class Todo {
   description: string;
 
   @Column({ default: false })
-  isComplete?: boolean;
+  isComplete: boolean;
 
   @Column({ default: false })
-  isPrivate?: boolean;
+  isPrivate: boolean;
+
+  @Column({ default: '' })
+  owner: string;
 }

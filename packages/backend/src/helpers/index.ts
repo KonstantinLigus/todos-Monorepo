@@ -4,23 +4,36 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
 import dotenv from 'dotenv';
 import sgMail from '@sendgrid/mail';
-import { ISendEmailPops } from '../types/todos.type';
+import { ISendEmailPops, ISendMailOptions, ISendPassword } from '../types/todos.type';
 
 dotenv.config();
 
 const { SEND_GRID_EMAIL_API_KEY, EMAIL_FROM, BASE_URL } = process.env;
 
-export const sendEmail = async ({ email, verificationToken }: ISendEmailPops) => {
+const sendEmail = async ({ email, verificationToken, isVerify, newPassword }: ISendMailOptions) => {
   if (SEND_GRID_EMAIL_API_KEY && EMAIL_FROM) {
     sgMail.setApiKey(SEND_GRID_EMAIL_API_KEY);
     const msg = {
       to: email,
       from: EMAIL_FROM,
-      subject: 'User verificaton',
-      html: `<a href="${BASE_URL}/api/user/verify/${verificationToken}">Press this link for verifing your email</a>`
+      subject: isVerify ? 'User verificaton' : 'Change password',
+      html: isVerify
+        ? `<a href="${BASE_URL}/api/user/verify/${verificationToken}">Press this link for verifing your email</a>`
+        : `<p>${newPassword}<p>`
     };
     await sgMail.send(msg);
   }
+};
+
+export const sendVerificationTokenByEmail = async ({
+  email,
+  verificationToken
+}: ISendEmailPops) => {
+  await sendEmail({ email, verificationToken, isVerify: true });
+};
+
+export const sendNewPasswordByEmail = async ({ email, newPassword }: ISendPassword) => {
+  await sendEmail({ email, newPassword, isVerify: false });
 };
 
 export const hashPassword = async (password: string) => {
@@ -30,8 +43,8 @@ export const hashPassword = async (password: string) => {
 };
 
 export const isValidPassword = async (password: string, hashedPassword: string) => {
-  const isSame = await bcrypt.compare(password, hashedPassword);
-  return isSame;
+  const isTheSame = await bcrypt.compare(password, hashedPassword);
+  return isTheSame;
 };
 
 export const genetateUUID = () => {

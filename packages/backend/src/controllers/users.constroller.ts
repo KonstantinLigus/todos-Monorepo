@@ -1,9 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Request, Response } from 'express';
 import passport from 'passport';
-import { genetateUUID, getToken, hashPassword, sendEmail } from '../helpers';
+import {
+  genetateUUID,
+  getToken,
+  hashPassword,
+  sendNewPasswordByEmail,
+  sendVerificationTokenByEmail
+} from '../helpers';
 import UserService from '../services/users.service';
-import { ICreateUserReq } from '../types/todos.type';
+import { ICreateUserReq, ILoginUserRes } from '../types/todos.type';
 
 class UserController {
   constructor(private userService: UserService) {}
@@ -19,7 +25,7 @@ class UserController {
       verificationToken
     };
     const userFromDB = await this.userService.createUser(userToDB);
-    await sendEmail({ email, verificationToken });
+    await sendVerificationTokenByEmail({ email, verificationToken });
     const token = getToken({ id: userFromDB.id });
     res.status(201).json({
       createdUser: {
@@ -45,7 +51,7 @@ class UserController {
     passport.authenticate(
       'login',
       { session: false },
-      async (err: ErrorCallback, user: passport.Profile, info: string) => {
+      async (err: ErrorCallback, user: passport.Profile, info: object) => {
         try {
           if (!user) {
             return res.status(400).json({
@@ -53,15 +59,33 @@ class UserController {
             });
           }
           req.login(user, { session: false }, async (error) => {
-            if (error) return res.send(err);
+            if (error) return res.send(error);
             const token = getToken({ id: user.id });
-            return res.status(200).json({ token });
+            const { name, email, id }: ILoginUserRes = user;
+            return res.status(200).json({ user: { name, email, id }, token, ...info });
           });
         } catch (error) {
           return res.status(404).json({ message: error });
         }
       }
     )(req, res);
+  }
+
+  async changePassword(req: Request, res: Response) {
+    const { email } = req.body;
+    const userFromDB = await this.userService.getUserById({ email });
+    if (userFromDB) {
+      const newPassword = genetateUUID();
+      const newHashedPassword = await hashPassword(newPassword);
+      await this.userService.updateUser(
+        { email: userFromDB.email },
+        { password: newHashedPassword }
+      );
+      await sendNewPasswordByEmail({ newPassword, email });
+      res.status(200).json({ message: `new password was send on your email: ${userFromDB.email}` });
+      return;
+    }
+    res.status(404).json({ message: 'User not found' });
   }
 }
 

@@ -1,12 +1,10 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import 'dotenv/config';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import cors from 'cors';
 
 import AppRouter from './routes';
 import connectDB from './config/database';
-import './passport';
 
 const app = express();
 const router = new AppRouter(app);

@@ -1,4 +1,4 @@
-import { ICreateUserReq } from '../types/todos.type';
+import { ICreateUserReq, IOptionalUser } from '../types/todos.type';
 import { User } from '../entities/User';
 import dataSource from '../config/datasourse';
 
@@ -20,6 +20,16 @@ export default class UserService {
       { verificationToken },
       { isVerify: true, verificationToken: '' }
     );
+    return userFromDB;
+  }
+
+  async getUserById(obj: IOptionalUser) {
+    const userFromDB = await dataSource.manager.findOneBy(User, obj);
+    return userFromDB;
+  }
+
+  async updateUser(userIdentity: IOptionalUser, objForUpdate: IOptionalUser) {
+    const userFromDB = await dataSource.manager.update(User, userIdentity, objForUpdate);
     return userFromDB;
   }
 }

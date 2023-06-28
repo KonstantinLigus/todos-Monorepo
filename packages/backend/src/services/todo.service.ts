@@ -3,8 +3,13 @@ import dataSource from '../config/datasourse';
 import { ICreateUpdateTodo } from '../types/todos.type';
 
 export default class TodoService {
-  async findAll() {
+  async findAllPublic() {
     const allTodosFromDB = await dataSource.manager.find(Todo);
+    return allTodosFromDB;
+  }
+
+  async findAll(userId: string) {
+    const allTodosFromDB = await dataSource.manager.findBy(Todo, { owner: userId });
     return allTodosFromDB;
   }
 
@@ -14,27 +19,30 @@ export default class TodoService {
     todo.description = todoReq.description;
     todo.isComplete = todoReq.isComplete;
     todo.isPrivate = todoReq.isPrivate;
+    todo.owner = todoReq.owner;
     const savedTodoFromDB = await dataSource.manager.save(todo);
     return savedTodoFromDB;
   }
 
-  async deleteTodo(id: string) {
-    const result = await dataSource.manager.delete(Todo, id);
+  async deleteTodo(userId: string, todoId: string) {
+    const result = await dataSource.manager.delete(Todo, { id: todoId, owner: userId });
     return result;
   }
 
-  async getOneTodo(id: string) {
-    const todoFromDB = await dataSource.manager.findOneBy(Todo, { id });
+  async getOneTodo(userId: string, todoId: string) {
+    const todoFromDB = await dataSource.manager.findOneBy(Todo, { id: todoId, owner: userId });
     return todoFromDB;
   }
 
-  async updateTodo(id: string, data: ICreateUpdateTodo) {
+  async updateTodo(userId: string, todoId: string, data: ICreateUpdateTodo) {
     const dataForUpdate = {
+      title: data.title,
+      description: data.description,
       isComplete: data.isComplete,
       isPrivate: data.isPrivate
     };
-    await dataSource.manager.update(Todo, { id }, dataForUpdate);
-    const updatedTodo = await this.getOneTodo(id);
+    await dataSource.manager.update(Todo, { id: todoId, owner: userId }, dataForUpdate);
+    const updatedTodo = await this.getOneTodo(userId, todoId);
     return updatedTodo;
   }
 }
