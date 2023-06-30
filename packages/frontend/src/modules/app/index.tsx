@@ -6,7 +6,7 @@ import { ThemeProvider as SCThemeProvider } from 'styled-components';
 import * as theme from '../theme';
 import * as Styled from './app.styled';
 import '../../style.css';
-import { MainRouter } from '../navigation';
+import { MainRouter } from '../pages/navigation';
 
 const queryClient = new QueryClient({
   defaultOptions: {

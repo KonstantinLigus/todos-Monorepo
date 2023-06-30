@@ -2,21 +2,22 @@
 import React from 'react';
 import { Formik, FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router';
-import { Schema } from '../../schema';
+import { SchemaTodoForm } from '../../schema';
 import {
+  FormTitle,
   ErrorMessageStyled,
+  TextAreaStyled,
   FieldStyled,
   FormStyled,
-  FormTitle,
-  LabelStyled,
-  TextAreaStyled
-} from './TodoForm.styled';
+  LabelStyled
+} from '../commonStyles/commonStyles';
+
 import { ButtonComponent } from '../Button';
 import { usePostNewTodo } from '../../hooks';
 import { APP_KEYS } from '../../consts';
-import { initialValues } from '../../initialValues';
+import { initialValuesTodoForm } from '../../initialValues';
 
-type IValues = typeof initialValues;
+type IValues = typeof initialValuesTodoForm;
 
 export const TodoForm: React.FC<{}> = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const TodoForm: React.FC<{}> = () => {
   const submitHandler = (values: IValues, actions: FormikHelpers<IValues>) => {
     const { title, description } = values;
     actions.resetForm({
-      values: initialValues
+      values: initialValuesTodoForm
     });
     mutate({ title, description });
     navigate(APP_KEYS.ROUTER_KEYS.TODOS);
@@ -34,7 +35,11 @@ export const TodoForm: React.FC<{}> = () => {
   return (
     <>
       <FormTitle>Add new TODO</FormTitle>
-      <Formik initialValues={initialValues} validationSchema={Schema} onSubmit={submitHandler}>
+      <Formik
+        initialValues={initialValuesTodoForm}
+        validationSchema={SchemaTodoForm}
+        onSubmit={submitHandler}
+      >
         <FormStyled>
           <LabelStyled htmlFor="title">Title</LabelStyled>
           <FieldStyled id="title" name="title" />

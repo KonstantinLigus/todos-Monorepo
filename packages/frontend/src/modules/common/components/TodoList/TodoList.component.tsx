@@ -1,6 +1,7 @@
 import React from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router';
+import { Typography } from '@mui/material';
 import { TodoListDesktop } from '../TodoListDesktop';
 import { TodoListMobile } from '../TodoListMobile';
 import { TodoListTablet } from '../TodoListTablet';
@@ -14,6 +15,11 @@ export const TodoList = () => {
   const isMatchesMobile = useMediaQuery(theme.MEDIA.mobile);
 
   const { data, isLoading, isSuccess, isError } = useGetTodos();
+
+  let isTodos;
+  if (data) {
+    isTodos = data.todosFromDB.length !== 0;
+  }
 
   const navigate = useNavigate();
   const deleteTodo = useDeleteTodo();
@@ -37,23 +43,28 @@ export const TodoList = () => {
 
   return (
     <>
+      {isSuccess && !isTodos && (
+        <Typography variant="subtitle1" gutterBottom>
+          There is no todos
+        </Typography>
+      )}
       {isLoading && <div>Loading...</div>}
       {isError && <div>An error has occurred </div>}
-      {isMatchesDesctop && isSuccess && (
+      {isSuccess && isTodos && isMatchesDesctop && (
         <TodoListDesktop
           todos={data.todosFromDB}
           viewBtnClickHandler={viewBtnClickHandler}
           deleteBtnClickHandler={deleteBtnClickHandler}
         />
       )}
-      {isMatchesMobile && isSuccess && (
+      {isSuccess && isTodos && isMatchesMobile && (
         <TodoListMobile
           todos={data.todosFromDB}
           viewBtnClickHandler={viewBtnClickHandler}
           deleteBtnClickHandler={deleteBtnClickHandler}
         />
       )}
-      {isMatchesTablet && isSuccess && (
+      {isSuccess && isTodos && isMatchesTablet && (
         <TodoListTablet
           todos={data.todosFromDB}
           deleteBtnClickHandler={deleteBtnClickHandler}

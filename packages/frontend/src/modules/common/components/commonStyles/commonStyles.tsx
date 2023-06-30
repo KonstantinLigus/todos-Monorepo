@@ -1,18 +1,17 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { Field, Form, ErrorMessage } from 'formik';
 import styled, { css } from 'styled-components';
-
-export const FormTitle = styled.h2`
-  margin-bottom: ${({ theme }) => theme.SPACES.s};
-  font-weight: ${({ theme }) => theme.FONTS.WEIGHTS.light};
-  text-align: center;
-`;
 
 export const LabelStyled = styled.label`
   display: block;
   margin-bottom: ${({ theme }) => theme.SPACES.s};
   font-size: ${({ theme }) => theme.FONTS.SIZES.m};
+`;
+
+export const FormTitle = styled.h2`
+  margin-bottom: ${({ theme }) => theme.SPACES.s};
+  font-weight: ${({ theme }) => theme.FONTS.WEIGHTS.light};
+  text-align: center;
 `;
 
 export const FormStyled = styled(Form)`

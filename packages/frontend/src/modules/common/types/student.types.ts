@@ -68,3 +68,30 @@ export interface ITodo {
   isComplete?: boolean;
   isActive?: boolean;
 }
+
+export interface IUser {
+  name: string;
+  password: string;
+  email: string;
+}
+
+export interface IResUser {
+  createdUser: {
+    name: string;
+    email: string;
+  };
+  token: string;
+}
+
+export type ErrorResponse = {
+  response: {
+    data: {
+      message: string;
+    };
+  };
+};
+
+export interface IUserLogIn {
+  password: string;
+  email: string;
+}

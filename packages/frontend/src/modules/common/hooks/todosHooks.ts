@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { INewTodoItem, ITodoItem } from '../types/student.types';
-import { UserService } from '../../servise/user.service';
+import { TodoService } from '../../servise/todo.service';
 import { APP_KEYS } from '../consts';
 
-const todosService = new UserService();
+const todosService = new TodoService();
 
 export const useGetTodos = () => {
   const getAllTodos = async () => {

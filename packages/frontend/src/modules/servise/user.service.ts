@@ -1,4 +1,4 @@
-import { ITodo } from '../common/types/student.types';
+import { IUser, IUserLogIn } from '../common/types/student.types';
 import HttpSerivce from './http.service';
 import { APP_KEYS } from '../common/consts';
 
@@ -30,23 +30,23 @@ export class UserService extends HttpSerivce {
     );
   }
 
-  putTodo(id: string, todo: ITodo) {
-    return this.put(
+  postLoginUser(user: IUserLogIn) {
+    return this.post(
       {
-        url: `${APP_KEYS.BACKEND_KEYS.TODOS}/${id}`,
-        data: todo
+        url: `${APP_KEYS.BACKEND_KEYS.USER_LOGIN}`,
+        data: user
       },
       false
     );
   }
 
-  postTodo(todo: ITodo) {
+  postNewUser(user: IUser) {
     return this.post(
       {
-        url: `${APP_KEYS.BACKEND_KEYS.TODOS}`,
-        data: todo
+        url: `${APP_KEYS.BACKEND_KEYS.USER_REGISTER}`,
+        data: user
       },
-      false
+      true
     );
   }
 }

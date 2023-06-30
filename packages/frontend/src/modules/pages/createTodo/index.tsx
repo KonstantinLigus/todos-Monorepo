@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container } from '../common/components/Container';
-import { TodoForm } from '../common/components/TodoForm';
+import { Container } from '../../common/components/Container';
+import { TodoForm } from '../../common/components/TodoForm';
 
 const CreateTodoPage = () => (
   <Container>

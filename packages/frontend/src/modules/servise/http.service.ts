@@ -29,6 +29,14 @@ export default class HttpSerivce {
     };
   }
 
+  private getToken() {
+    return localStorage.getItem(APP_KEYS.STORAGE_KEYS.TOKEN);
+  }
+
+  private setAuthorizationHeader() {
+    this.fetchingService.defaults.headers.common.Authorization = `Bearer ${this.getToken()}`;
+  }
+
   private extractUrlAndDataFromConfig({
     data,
     url,
@@ -39,36 +47,21 @@ export default class HttpSerivce {
 
   get(config: IUrlAndDataFromConfig, withAuth = true) {
     if (withAuth) {
-      config.headers = {
-        ...config.headers,
-        ...this.populateTokenToHeaderConfig()
-      };
+      this.setAuthorizationHeader();
     }
-    return this.fetchingService.get(
-      this.getFullApiUrl(config.url),
-      this.extractUrlAndDataFromConfig(config)
-    );
+    return this.fetchingService.get(this.getFullApiUrl(config.url), config.data);
   }
 
   delete(config: IUrlAndDataFromConfig, withAuth = true) {
     if (withAuth) {
-      config.headers = {
-        ...config.headers,
-        ...this.populateTokenToHeaderConfig()
-      };
+      this.setAuthorizationHeader();
     }
-    return this.fetchingService.delete(
-      this.getFullApiUrl(config.url),
-      this.extractUrlAndDataFromConfig(config)
-    );
+    return this.fetchingService.delete(this.getFullApiUrl(config.url), config.data);
   }
 
   put(config: IUrlAndDataFromConfig, withAuth = true) {
     if (withAuth) {
-      config.headers = {
-        ...config.headers,
-        ...this.populateTokenToHeaderConfig()
-      };
+      this.setAuthorizationHeader();
     }
     return this.fetchingService.put(
       this.getFullApiUrl(config.url),
@@ -79,15 +72,8 @@ export default class HttpSerivce {
 
   post(config: IUrlAndDataFromConfig, withAuth = true) {
     if (withAuth) {
-      config.headers = {
-        ...config.headers,
-        ...this.populateTokenToHeaderConfig()
-      };
+      this.setAuthorizationHeader();
     }
-    return this.fetchingService.post(
-      this.getFullApiUrl(config.url),
-      config.data,
-      this.extractUrlAndDataFromConfig(config)
-    );
+    return this.fetchingService.post(this.getFullApiUrl(config.url), config.data);
   }
 }
