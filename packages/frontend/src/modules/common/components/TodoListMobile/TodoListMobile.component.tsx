@@ -19,8 +19,14 @@ export const TodoListMobile: FC<ITodoList> = ({
             mr={theme.SPACES.l}
             itemId={todo.id}
             onClick={viewBtnClickHandler}
+            type="button"
           />
-          <ButtonComponent title="Delete" itemId={todo.id} onClick={deleteBtnClickHandler} />
+          <ButtonComponent
+            title="Delete"
+            itemId={todo.id}
+            onClick={deleteBtnClickHandler}
+            type="button"
+          />
         </span>
         <Divider flexItem sx={{ mt: theme.SPACES.l }} />
       </ListItem>

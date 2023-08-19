@@ -9,14 +9,17 @@ export const ButtonComponent: FC<IButtonComponent> = ({
   itemId,
   mr,
   mt,
-  type
+  type,
+  variant,
+  color
 }) => (
   <Button
-    variant="contained"
+    variant={variant || 'contained'}
     onClick={onClick}
     sx={{ display, mr, mt }}
     data-id={itemId}
     type={type}
+    color={color}
   >
     {title}
   </Button>

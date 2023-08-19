@@ -8,6 +8,7 @@ import { TodoListTablet } from '../TodoListTablet';
 import * as theme from '../../../theme';
 import { useDeleteTodo, useGetTodos } from '../../hooks';
 import { APP_KEYS } from '../../consts';
+import { Filter } from '../Filter';
 
 export const TodoList = () => {
   const isMatchesDesctop = useMediaQuery(theme.MEDIA.desktop);
@@ -16,10 +17,7 @@ export const TodoList = () => {
 
   const { data, isLoading, isSuccess, isError } = useGetTodos();
 
-  let isTodos;
-  if (data) {
-    isTodos = data.todosFromDB.length !== 0;
-  }
+  const isTodos = data && data.todosFromDB.length !== 0;
 
   const navigate = useNavigate();
   const deleteTodo = useDeleteTodo();
@@ -43,13 +41,14 @@ export const TodoList = () => {
 
   return (
     <>
+      {isLoading && <div>Loading...</div>}
+      {isError && <div>An error has occurred </div>}
+      {isSuccess && <Filter />}
       {isSuccess && !isTodos && (
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography variant="subtitle1" gutterBottom sx={{ mx: 'auto', maxWidth: '1100px' }}>
           There is no todos
         </Typography>
       )}
-      {isLoading && <div>Loading...</div>}
-      {isError && <div>An error has occurred </div>}
       {isSuccess && isTodos && isMatchesDesctop && (
         <TodoListDesktop
           todos={data.todosFromDB}

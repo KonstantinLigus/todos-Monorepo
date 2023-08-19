@@ -13,14 +13,12 @@ export const TodoItem = () => {
   const { mutate } = useUpdateTodo(id);
   const { data, isLoading, isSuccess, isError, remove } = useGetTodo(id);
 
-  const completeCheckHandler = (isChecked: boolean): boolean => {
+  const completeCheckHandler = (isChecked: boolean) => {
     mutate({ isComplete: isChecked });
-    return isChecked;
   };
 
-  const privateCheckHandler = (isChecked: boolean): boolean => {
+  const privateCheckHandler = (isChecked: boolean) => {
     mutate({ isPrivate: isChecked });
-    return isChecked;
   };
 
   const onBackClickHandler = () => {
@@ -31,7 +29,7 @@ export const TodoItem = () => {
   if (isLoading) <div>Loading...</div>;
   if (isError) <div>An error has occurred </div>;
   if (isSuccess) {
-    const { title, description, isComplete, isPrivate } = data.todoFromDB;
+    const { title, description, isComplete, isPrivate } = data;
     return (
       <ItemWrapperStyled>
         <div>
@@ -41,17 +39,15 @@ export const TodoItem = () => {
         </div>
         <SwitchComponent
           nameForLabel="isComplete"
-          isLabel
           isChecked={isComplete}
           callback={completeCheckHandler}
         />
         <SwitchComponent
           nameForLabel="isPrivate"
           isChecked={isPrivate}
-          isLabel
           callback={privateCheckHandler}
         />
-        <ButtonComponent title="Back" onClick={onBackClickHandler} display="block" />
+        <ButtonComponent title="Back" onClick={onBackClickHandler} display="block" type="button" />
       </ItemWrapperStyled>
     );
   }

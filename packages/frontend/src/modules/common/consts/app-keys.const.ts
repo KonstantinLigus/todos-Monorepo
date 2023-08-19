@@ -8,14 +8,13 @@ export const STORAGE_KEYS = {
 
 // React-query keys
 export const QUERY_KEYS = {
-  EXAMPLE: 'EXAMPLE',
+  TODOS_FILTER: 'TodosFilter',
   TOKEN: 'TOKEN',
-  STATISTIC: 'statistic',
+  FILTER: 'todos/filter',
   TRENDING: 'trending',
   TODOS: 'todos',
   TODO: 'todo',
-  USER: 'user',
-  IS_USER_LOGGED_IN: 'isUserLoggedIn'
+  USER: 'user'
 };
 
 // Backend Routes
@@ -24,9 +23,10 @@ export const BACKEND_KEYS = {
   TODOS: 'todos',
   USER_REGISTER: 'user/register',
   USER_LOGIN: 'user/login',
+  USER_REFRESH: 'user/refresh',
   BASE_TODOS_URL: 'http://localhost:4200/api/todos',
-  ARTICLES: 'articles',
-  STATISTIC: 'statistic',
+  FILTER: 'todos/filter',
+  PER_PAGE: 5,
   TRENDING: 'trending',
   FEATURED_ARTICLES: 'featured_articles'
 };

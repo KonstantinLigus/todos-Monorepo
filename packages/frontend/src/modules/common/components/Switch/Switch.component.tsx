@@ -3,24 +3,22 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { ISwitch } from '../../types/student.types';
 
-export const SwitchComponent: FC<ISwitch> = ({ nameForLabel, isChecked, isLabel, callback }) => {
-  const [isSwitchChecked, setIsSwitchChecked] = React.useState(isChecked);
-
+export const SwitchComponent: FC<ISwitch> = ({ nameForLabel, isChecked, callback, ml }) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const res = callback(event.target.checked);
-    setIsSwitchChecked(res);
+    callback(event.target.checked);
   };
 
   return (
     <>
-      {isLabel && (
+      {nameForLabel && (
         <FormControlLabel
-          control={<Switch checked={isSwitchChecked} onChange={onChange} name={nameForLabel} />}
+          control={<Switch checked={isChecked} onChange={onChange} name={nameForLabel} />}
           label={nameForLabel}
           labelPlacement="start"
+          sx={{ ml }}
         />
       )}
-      {!isLabel && <Switch checked={isChecked} onChange={onChange} />}
+      {!nameForLabel && <Switch checked={isChecked} onChange={onChange} />}
     </>
   );
 };

@@ -9,10 +9,20 @@ export class TodoService extends HttpSerivce {
     });
   }
 
+  getFilteredTodos(filter: string) {
+    return this.get({
+      url: `${APP_KEYS.BACKEND_KEYS.TODOS}?${filter}`
+    });
+  }
+
   getTodo(id: string) {
     return this.get({
       url: `${APP_KEYS.BACKEND_KEYS.TODOS}/${id}`
     });
+  }
+
+  getFilter() {
+    return this.get({ url: `${APP_KEYS.BACKEND_KEYS.FILTER}` });
   }
 
   deleteTodo(id: string) {

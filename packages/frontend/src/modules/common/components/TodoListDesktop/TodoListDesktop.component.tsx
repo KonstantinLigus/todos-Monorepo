@@ -5,6 +5,8 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Stack from '@mui/material/Stack';
+
 import Paper from '@mui/material/Paper';
 import { ButtonComponent } from '../Button';
 import * as theme from '../../../theme';
@@ -25,8 +27,7 @@ const tableContainerStyles = {
   maxHeight: '85vh',
   maxWidth: '1100px',
   margin: 'auto',
-  borderTop: 'solid',
-  borderBottom: 'solid',
+  border: 'solid',
   color: theme.COLORS.secondary,
   overflow: 'auto',
   boxShadow: 'none'
@@ -67,19 +68,22 @@ export const TodoListDesktop: FC<ITodoList> = ({
               {todo.description}
             </TableCell>
             <TableCell align="center" style={actionsStyle}>
-              <ButtonComponent
-                title="View"
-                onClick={viewBtnClickHandler}
-                display="inline-block"
-                itemId={todo.id}
-                mr={theme.SPACES.s}
-              />
-              <ButtonComponent
-                title="Delete"
-                onClick={deleteBtnClickHandler}
-                display="inline-block"
-                itemId={todo.id}
-              />
+              <Stack spacing={theme.SPACES.s}>
+                <ButtonComponent
+                  title="View"
+                  onClick={viewBtnClickHandler}
+                  display="inline-block"
+                  itemId={todo.id}
+                  type="button"
+                />
+                <ButtonComponent
+                  title="Delete"
+                  onClick={deleteBtnClickHandler}
+                  display="inline-block"
+                  itemId={todo.id}
+                  type="button"
+                />
+              </Stack>
             </TableCell>
           </TableRow>
         ))}

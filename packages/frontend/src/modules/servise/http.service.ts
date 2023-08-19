@@ -23,12 +23,6 @@ export default class HttpSerivce {
     return `${this.baseUrl}/${this.apiVersion}/${url}`;
   }
 
-  private populateTokenToHeaderConfig() {
-    return {
-      Authorization: localStorage.getItem('token')
-    };
-  }
-
   private getToken() {
     return localStorage.getItem(APP_KEYS.STORAGE_KEYS.TOKEN);
   }

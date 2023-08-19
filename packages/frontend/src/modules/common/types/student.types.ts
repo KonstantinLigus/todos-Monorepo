@@ -31,7 +31,7 @@ export interface IButtonComponent extends ButtonProps {
   itemId?: string;
   mr?: string;
   mt?: string;
-  type?: 'submit';
+  type?: 'submit' | 'button';
 }
 
 export interface IButtonStyled extends ButtonProps {
@@ -40,9 +40,9 @@ export interface IButtonStyled extends ButtonProps {
 
 export interface ISwitch {
   nameForLabel?: string;
-  isLabel?: boolean;
   isChecked: boolean;
-  callback: (isChecked: boolean) => boolean;
+  callback: (isChecked: boolean) => void;
+  ml?: string;
 }
 
 export interface ITodoList {
@@ -58,8 +58,8 @@ export interface ITodoList {
 }
 
 export interface IUrlAndDataFromConfig extends AxiosRequestConfig {
-  data?: object;
   url: string;
+  data?: object;
 }
 
 export interface ITodo {
@@ -76,22 +76,38 @@ export interface IUser {
 }
 
 export interface IResUser {
-  createdUser: {
+  user: {
     name: string;
     email: string;
   };
   token: string;
 }
 
-export type ErrorResponse = {
+export interface ErrorResponse {
   response: {
     data: {
       message: string;
     };
   };
-};
+}
 
 export interface IUserLogIn {
   password: string;
   email: string;
+}
+
+export interface IData {
+  user: {
+    name: string;
+    email: string;
+  };
+  token: string;
+}
+
+export interface INavigation {
+  closeNav: MouseEventHandler;
+}
+
+export interface IUserInfoMenu {
+  closeMenu: Function;
 }
