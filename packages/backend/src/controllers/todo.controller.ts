@@ -1,8 +1,6 @@
 import { Response, Request } from 'express';
 import TodoService from '../services/todo.service';
-import { IReq } from '../types/todos.type';
-
-type IError = Error & { status?: number };
+import { IError, IReq } from '../types/todos.type';
 
 const errorChecker = (result: object | null) => {
   if (result === null) {
@@ -12,7 +10,7 @@ const errorChecker = (result: object | null) => {
   }
 };
 
-export class TodoController {
+class TodoController {
   constructor(private todoService: TodoService) {}
 
   async getAllTodoPublic(_: Request, res: Response) {
@@ -20,10 +18,40 @@ export class TodoController {
     res.status(200).json({ todosFromDB });
   }
 
-  async getAllTodo(req: IReq, res: Response) {
+  async getTodos(req: IReq, res: Response) {
     const userId = req.user;
-    const todosFromDB = await this.todoService.findAll(userId);
-    res.status(200).json({ todosFromDB });
+    const { filters } = req;
+    let { page, perPage } = req.query;
+    let pages = 1;
+    let todosFromDB = null;
+
+    if (perPage && +perPage > 0 && page && +page > 0) {
+      page = Math.round(+page);
+      perPage = Math.round(+perPage);
+
+      todosFromDB = await this.todoService.findTodos({
+        userId,
+        filters,
+        skip: (page - 1) * perPage,
+        take: perPage
+      });
+      const todosAmount = await this.todoService.countTodos({ owner: userId, filters });
+      pages = todosAmount === 0 ? 1 : Math.ceil(todosAmount / perPage);
+    }
+    if (!perPage && !page) {
+      todosFromDB = await this.todoService.findTodos({
+        userId,
+        filters
+      });
+      page = 1;
+    }
+    res.status(200).json({ todosFromDB, page, pages });
+  }
+
+  async getFilter(req: IReq, res: Response) {
+    const userId = req.user;
+    const filterFromDB = await this.todoService.getFilter(userId);
+    res.status(200).json({ filterFromDB });
   }
 
   async createTodo(req: IReq, res: Response) {

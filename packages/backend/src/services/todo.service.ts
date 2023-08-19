@@ -1,6 +1,8 @@
+import { getFilterQuery } from '../helpers';
 import { Todo } from '../entities/Todo';
 import dataSource from '../config/datasourse';
-import { ICreateUpdateTodo } from '../types/todos.type';
+import { ICreateUpdateTodo, IFindTodos, ITodoCount } from '../types/todos.type';
+import { Filter } from '../entities/Filter';
 
 export default class TodoService {
   async findAllPublic() {
@@ -8,9 +10,42 @@ export default class TodoService {
     return allTodosFromDB;
   }
 
-  async findAll(userId: string) {
-    const allTodosFromDB = await dataSource.manager.findBy(Todo, { owner: userId });
-    return allTodosFromDB;
+  async findTodos({ userId, filters, skip, take }: IFindTodos) {
+    let todosFromDB = null;
+    if (filters && typeof skip === 'number' && typeof take === 'number') {
+      const filterQuery = getFilterQuery(filters);
+      todosFromDB = await dataSource.manager.find(Todo, {
+        where: { owner: userId, ...filterQuery },
+        skip,
+        take
+      });
+    }
+    if (filters && typeof skip !== 'number' && typeof take !== 'number') {
+      const filterQuery = getFilterQuery(filters);
+      todosFromDB = await dataSource.manager.find(Todo, {
+        where: { owner: userId, ...filterQuery }
+      });
+    }
+    if (!filters && typeof skip === 'number' && typeof take === 'number') {
+      todosFromDB = await dataSource.manager.find(Todo, {
+        where: { owner: userId },
+        skip,
+        take
+      });
+    }
+    if (!filters && !skip && !take) {
+      todosFromDB = await dataSource.manager.find(Todo, {
+        where: { owner: userId }
+      });
+    }
+    return todosFromDB;
+  }
+
+  async countTodos({ owner, filters }: ITodoCount) {
+    const filterQuery = getFilterQuery(filters);
+
+    const count = await dataSource.manager.countBy(Todo, { owner, ...filterQuery });
+    return count;
   }
 
   async createTodo(todoReq: ICreateUpdateTodo) {
@@ -44,5 +79,26 @@ export default class TodoService {
     await dataSource.manager.update(Todo, { id: todoId, owner: userId }, dataForUpdate);
     const updatedTodo = await this.getOneTodo(userId, todoId);
     return updatedTodo;
+  }
+
+  async createFilter(filter: Partial<Filter>, owner: string) {
+    const { title, isComplete, isPrivate } = filter;
+
+    await dataSource.manager.upsert(Filter, { title, isComplete, isPrivate, owner }, ['owner']);
+    const filterFromDB = await dataSource.manager.findOneBy(Filter, { owner });
+
+    if (filterFromDB) {
+      return {
+        title: filterFromDB.title,
+        isComplete: filterFromDB.isComplete,
+        isPrivate: filterFromDB.isPrivate
+      };
+    }
+    return null;
+  }
+
+  async getFilter(owner: string) {
+    const filterFromDB = await dataSource.manager.findOneBy(Filter, { owner });
+    return filterFromDB;
   }
 }

@@ -23,13 +23,15 @@ export default class UserService {
     return userFromDB;
   }
 
-  async getUserById(obj: IOptionalUser) {
+  async getUserBy(obj: IOptionalUser) {
     const userFromDB = await dataSource.manager.findOneBy(User, obj);
+
     return userFromDB;
   }
 
   async updateUser(userIdentity: IOptionalUser, objForUpdate: IOptionalUser) {
-    const userFromDB = await dataSource.manager.update(User, userIdentity, objForUpdate);
+    await dataSource.manager.update(User, userIdentity, objForUpdate);
+    const userFromDB = await this.getUserBy(userIdentity);
     return userFromDB;
   }
 }

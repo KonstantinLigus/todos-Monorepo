@@ -1119,7 +1119,7 @@
   resolved "https://registry.npmjs.org/@babel/regjsgen/-/regjsgen-0.8.0.tgz"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.22.5"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.22.5.tgz"
   integrity sha512-ecjvYlnAaZ/KVneE/OdKYBYfgXV3Ptu6zQWmgEF7vwKhQnvVS6bjMD2XYgj+SNvQ1GfK/pjgokfPkC/2CO8CuA==
@@ -1165,7 +1165,7 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cgs-team-boilerplate/backend@file:c:\\github\\cgs-team-camp\\packages\\backend":
+"@cgs-team-boilerplate/backend@file:C:\\GitHub\\cgs-team-camp\\packages\\backend":
   version "1.0.0"
   resolved "file:packages/backend"
   dependencies:
@@ -1197,12 +1197,13 @@
     typescript "^4.7.4"
     uuid "^9.0.0"
 
-"@cgs-team-boilerplate/frontend@file:c:\\github\\cgs-team-camp\\packages\\frontend":
+"@cgs-team-boilerplate/frontend@file:C:\\GitHub\\cgs-team-camp\\packages\\frontend":
   version "0.1.0"
   resolved "file:packages/frontend"
   dependencies:
     "@emotion/react" "^11.11.1"
     "@emotion/styled" "^11.11.0"
+    "@mui/icons-material" "^5.13.7"
     "@mui/material" "^5.13.5"
     "@mui/styled-engine" "npm:@mui/styled-engine-sc@latest"
     "@mui/styled-engine-sc" "^5.12.0"
@@ -1222,7 +1223,6 @@
     react-router-dom "^6.13.0"
     react-scripts "5.0.1"
     styled-components "^5.3.11"
-    swiper "^9.4.1"
     web-vitals "^3.3.2"
     yup "^1.2.0"
 
@@ -2546,6 +2546,13 @@
   resolved "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.13.4.tgz"
   integrity sha512-yFrMWcrlI0TqRN5jpb6Ma9iI7sGTHpytdzzL33oskFHNQ8UgrtPas33Y1K7sWAMwCrr1qbWDrOHLAQG4tAzuSw==
 
+"@mui/icons-material@^5.13.7":
+  version "5.13.7"
+  resolved "https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.13.7.tgz"
+  integrity sha512-zoVtkb9jYVUGfI7CobOdDBEAlpg3XESiO6cWqSDGwEma69+CBDIAwGpnO5truvQDJHBGSAfzFj3nObwxjkyA7Q==
+  dependencies:
+    "@babel/runtime" "^7.22.5"
+
 "@mui/material@^5.13.5":
   version "5.13.5"
   resolved "https://registry.npmjs.org/@mui/material/-/material-5.13.5.tgz"
@@ -3858,6 +3865,11 @@
   version "4.2.2"
   resolved "https://registry.npmjs.org/@xtuc/long/-/long-4.2.2.tgz"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
+
+"10@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/10/-/10-0.0.1.tgz"
+  integrity sha512-8E7jYNuKmO2h3QxQbgLExVxUYj+bfvEjdK7sgQ9QqctiJrh2rFnkdrqNv2INyjuyt9OGi40RlMhx/sLJKSzdig==
 
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.6"
@@ -13861,11 +13873,6 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
-ssr-window@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/ssr-window/-/ssr-window-4.0.2.tgz"
-  integrity sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==
-
 ssri@^8.0.0, ssri@^8.0.1:
   version "8.0.1"
   resolved "https://registry.npmjs.org/ssri/-/ssri-8.0.1.tgz"
@@ -14250,12 +14257,10 @@ svgo@^2.7.0:
     picocolors "^1.0.0"
     stable "^0.1.8"
 
-swiper@^9.4.1:
-  version "9.4.1"
-  resolved "https://registry.npmjs.org/swiper/-/swiper-9.4.1.tgz"
-  integrity sha512-1nT2T8EzUpZ0FagEqaN/YAhRj33F2x/lN6cyB0/xoYJDMf8KwTFT3hMOeoB8Tg4o3+P/CKqskP+WX0Df046fqA==
-  dependencies:
-    ssr-window "^4.0.2"
+swiper@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.npmjs.org/swiper/-/swiper-10.1.0.tgz"
+  integrity sha512-E+wh+hcSbwlRfXuwBTclcOOikOjNdSF0a2Sdg3J4cIWtHO64A7SaLRfezfrJ67CW3GEc15AduYU2YKlElsjqsQ==
 
 symbol-tree@^3.2.4:
   version "3.2.4"

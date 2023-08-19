@@ -1,9 +1,10 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
 import dotenv from 'dotenv';
 import sgMail from '@sendgrid/mail';
+import { Like } from 'typeorm';
+import { Filter } from '../entities/Filter';
 import { ISendEmailPops, ISendMailOptions, ISendPassword } from '../types/todos.type';
 
 dotenv.config();
@@ -55,4 +56,17 @@ export const genetateUUID = () => {
 export const getToken = (data: { id: string }) => {
   const token = jwt.sign(data, process.env.JWT_SECRET);
   return token;
+};
+
+export const getFilterQuery = (filters: Omit<Filter, 'owner'>) => {
+  const filterQuery: Partial<Omit<Filter, 'owner'>> = {};
+  let key: keyof Omit<Filter, 'owner'>;
+  for (key in filters) {
+    if (key) {
+      const isValueBoolean = typeof filters[key] === 'boolean';
+      const filterValue = isValueBoolean ? filters[key] : Like(`%${filters[key]}%`);
+      Object.defineProperty(filterQuery, key, { value: filterValue, enumerable: true });
+    }
+  }
+  return filterQuery;
 };

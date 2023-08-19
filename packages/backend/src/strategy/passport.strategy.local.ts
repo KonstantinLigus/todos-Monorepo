@@ -1,10 +1,10 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import { User } from '../entities/User';
-import dataSource from '../config/datasourse';
+import UserService from '../services/users.service';
 import { isValidPassword } from '../helpers';
 
 const LocalStrategy = passportLocal.Strategy;
+const userService = new UserService();
 
 const enableLocalStrategy = () =>
   passport.use(
@@ -16,7 +16,8 @@ const enableLocalStrategy = () =>
       },
       async (email, password, done) => {
         try {
-          const user = await dataSource.manager.findOneBy(User, { email });
+          const user = await userService.getUserBy({ email });
+
           if (!user) {
             return done(null, false, { message: 'Wrong email' });
           }
@@ -24,9 +25,14 @@ const enableLocalStrategy = () =>
           if (!validate) {
             return done(null, false, { message: 'Wrong password' });
           }
-          return done(null, user, { message: 'Logged in successfully' });
+          if (!user.isVerify) {
+            return done(null, false, { message: 'Email does not verified' });
+          }
+          if (user) {
+            return done(null, user, { message: 'Logged in successfully' });
+          }
         } catch (error) {
-          return done(error);
+          done(error);
         }
       }
     )

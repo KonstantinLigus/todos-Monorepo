@@ -1,19 +1,33 @@
 import { Router } from 'express';
 
 import todoController from '../../controllers/todo.controller';
-import { isTodoExist, tryCatchWrapper, validationBody } from '../../middleware';
+import {
+  createTodosFilter,
+  isTodoExist,
+  isUserExistChecker,
+  tryCatchWrapper,
+  validationBody
+} from '../../middleware';
 import { schemaPostTodo, schemaPutTodo } from '../../schemas/schema.joi';
 import enableStrategyJWT from '../../strategy/passport.strategy.JWT';
 import authenticateJWT from '../../strategy/passport.authenticate.JWT';
 
 const todosRouter: Router = Router();
 
-todosRouter.get('/public', tryCatchWrapper(todoController.getAllTodo.bind(todoController)));
-
 enableStrategyJWT();
-todosRouter.use(authenticateJWT());
 
-todosRouter.get('', tryCatchWrapper(todoController.getAllTodo.bind(todoController)));
+todosRouter.get('/public', tryCatchWrapper(todoController.getAllTodoPublic.bind(todoController)));
+
+todosRouter.use(authenticateJWT);
+
+todosRouter.use(isUserExistChecker);
+
+todosRouter.get(
+  '',
+  tryCatchWrapper(createTodosFilter),
+  tryCatchWrapper(todoController.getTodos.bind(todoController))
+);
+todosRouter.get('/filter', tryCatchWrapper(todoController.getFilter.bind(todoController)));
 todosRouter.get(
   '/:todoId',
   isTodoExist,
